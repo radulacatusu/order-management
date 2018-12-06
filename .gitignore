@@ -1,0 +1,7 @@
+.idea
+target
+*.iml
+coverage-report
+.mvn
+*.log
+*.gz

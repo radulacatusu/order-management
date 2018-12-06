@@ -1,0 +1,15 @@
+server.port: 8090
+
+spring.datasource:
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/orders?createDatabaseIfNotExist
+  username: postgres
+  password: postgres
+spring.jpa:
+  hibernate:
+    ddl-auto: update
+  show-sql: false
+  properties.hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    jdbc.lob.non_contextual_creation: true
+logging.file: orders.log
