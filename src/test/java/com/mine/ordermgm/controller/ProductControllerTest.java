@@ -28,6 +28,20 @@ import static org.junit.Assert.*;
 public class ProductControllerTest {
 
     @Test
+    public void createNewProductInvalidName() {
+        Product request = newProduct(null, new BigDecimal(100.00));
+        Response response = createProductRequest(request);
+        assertEquals(400, response.statusCode());
+    }
+
+    @Test
+    public void createNewProductInvalidPrice() {
+        Product request = newProduct("Test", null);
+        Response response = createProductRequest(request);
+        assertEquals(400, response.statusCode());
+    }
+
+    @Test
     public void createNewProduct() {
         Product request = newProduct("Test Product New", new BigDecimal(100.00));
         Response response = createProductRequest(request);
