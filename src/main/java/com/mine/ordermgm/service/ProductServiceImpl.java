@@ -1,6 +1,8 @@
 package com.mine.ordermgm.service;
 
+import com.mine.ordermgm.api.PlaceOrderRequest;
 import com.mine.ordermgm.api.UpdateProductRequest;
+import com.mine.ordermgm.exception.ProductNotFoundException;
 import com.mine.ordermgm.model.Product;
 import com.mine.ordermgm.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @stefanl
@@ -50,6 +54,18 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(existingProduct);
         }
         return existingProductOpt;
+    }
+
+    @Override
+    public Set<Product> findProducts(List<Long> ids) throws ProductNotFoundException {
+        Set<Optional<Product>> productsOpt = ids.stream()
+                .map(productRepository::findById).collect(Collectors.toSet());
+
+        if (!productsOpt.stream().allMatch(Optional::isPresent)) {
+            throw new ProductNotFoundException("Product does not exist");
+        }
+
+        return productsOpt.stream().map(p -> p.get()).collect(Collectors.toSet());
     }
 
     private void applyUpdates(UpdateProductRequest request, Product existingProduct) {

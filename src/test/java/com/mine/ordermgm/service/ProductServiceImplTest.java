@@ -1,6 +1,8 @@
 package com.mine.ordermgm.service;
 
+import com.mine.ordermgm.api.PlaceOrderRequest;
 import com.mine.ordermgm.api.UpdateProductRequest;
+import com.mine.ordermgm.exception.ProductNotFoundException;
 import com.mine.ordermgm.model.Product;
 import com.mine.ordermgm.repository.ProductRepository;
 import org.junit.Assert;
@@ -18,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -50,6 +53,15 @@ public class ProductServiceImplTest {
         Mockito.when(productRepository.save(productTwo))
                 .thenReturn(productTwo);
 
+    }
+
+    @Test
+    public void productNotExists() {
+        try {
+            productService.findProducts(Arrays.asList((long)5));
+        } catch (ProductNotFoundException e) {
+            assertEquals("Product does not exist", e.getMessage());
+        }
     }
 
     @Test
@@ -107,7 +119,7 @@ public class ProductServiceImplTest {
         assertFalse(result.isPresent());
     }
 
-    public Product newProduct(long id, String name, BigDecimal price) {
+    static Product newProduct(long id, String name, BigDecimal price) {
         Product product = new Product();
         product.setId(id);
         product.setName(name);
@@ -115,7 +127,7 @@ public class ProductServiceImplTest {
         return product;
     }
 
-    public UpdateProductRequest newUpdateProductRequest(String name, BigDecimal price) {
+    static UpdateProductRequest newUpdateProductRequest(String name, BigDecimal price) {
         UpdateProductRequest request = new UpdateProductRequest();
         request.setName(name);
         request.setPrice(price);

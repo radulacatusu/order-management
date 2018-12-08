@@ -2,7 +2,7 @@ server.port: 8090
 
 spring.datasource:
   driver-class-name: org.postgresql.Driver
-  url: jdbc:postgresql://localhost:5432/orders?createDatabaseIfNotExist
+  url: jdbc:postgresql://localhost:5432/orders?createDatabaseIfNotExist=true
   username: postgres
   password: postgres
 spring.jpa:

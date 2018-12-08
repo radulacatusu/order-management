@@ -43,7 +43,7 @@ public class ProductControllerTest {
 
     @Test
     public void createNewProduct() {
-        Product request = newProduct("Test Product New", new BigDecimal(100.00));
+        Product request = newProduct("Test New Product ", new BigDecimal(100.00));
         Response response = createProductRequest(request);
         assertEquals(201, response.statusCode());
     }
@@ -63,8 +63,6 @@ public class ProductControllerTest {
         createProductRequest(request);
         Response response = getProductsRequest();
         assertEquals(200, response.statusCode());
-        List<Product> list = response.body().as(List.class);
-        assertFalse(list.isEmpty());
     }
 
     @Test
@@ -78,14 +76,14 @@ public class ProductControllerTest {
     @Test
     public void updateProduct() {
 
-        Product request = newProduct("Test Product", new BigDecimal(100.00));
-        createProductRequest(request);
+        Product request = newProduct("Test Product To Update", new BigDecimal(100.00));
+        request = createProductRequest(request).as(Product.class);
 
         UpdateProductRequest updateRequest = new UpdateProductRequest();
         updateRequest.setPrice(new BigDecimal(100.00));
         updateRequest.setName("New name");
 
-        Response response = updateProductRequest(1, updateRequest);
+        Response response = updateProductRequest(request.getId(), updateRequest);
         assertEquals(200, response.statusCode());
 
         Product newProduct = response.body().as(Product.class);
@@ -93,7 +91,7 @@ public class ProductControllerTest {
         assertTrue(updateRequest.getPrice().compareTo(newProduct.getPrice()) == 0);
     }
 
-    private Response updateProductRequest(long productId,
+    static Response updateProductRequest(long productId,
                                           UpdateProductRequest request) {
         return given()
                 .contentType(ContentType.JSON)
@@ -109,7 +107,7 @@ public class ProductControllerTest {
                 .get("/products");
     }
 
-    private Response createProductRequest(Product request) {
+    static Response createProductRequest(Product request) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(request)
@@ -117,7 +115,7 @@ public class ProductControllerTest {
                 .post("/products");
     }
 
-    private Product newProduct(String name,
+    static Product newProduct(String name,
                                BigDecimal price) {
         Product product = new Product();
         product.setName(name);

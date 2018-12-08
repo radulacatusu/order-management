@@ -1,10 +1,12 @@
 package com.mine.ordermgm.service;
 
 import com.mine.ordermgm.api.UpdateProductRequest;
+import com.mine.ordermgm.exception.ProductNotFoundException;
 import com.mine.ordermgm.model.Product;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @stefanl
@@ -42,4 +44,11 @@ public interface ProductService {
      */
     Optional<Product> updateProduct(long id,
                                     UpdateProductRequest request);
+
+    /**
+     * @param ids
+     * @return
+     * @throws ProductNotFoundException
+     */
+    Set<Product> findProducts(List<Long> ids) throws ProductNotFoundException;
 }

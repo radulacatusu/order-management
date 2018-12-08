@@ -1,7 +1,9 @@
 package com.mine.ordermgm.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mine.ordermgm.util.BigDecimalSerializer;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -18,17 +20,21 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(notes = "The database generated product ID")
     private long id;
 
     @NotBlank
     @Column(name = "NAME", unique = true)
+    @ApiModelProperty(notes = "The name of the product")
     private String name;
 
     @NotNull
     @JsonSerialize(using = BigDecimalSerializer.class)
     @Column(scale = 2, precision = 15)
+    @ApiModelProperty(notes = "The price of the product")
     private BigDecimal price;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "products")
     private Set<Order> orders;
 
