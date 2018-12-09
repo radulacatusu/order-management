@@ -37,7 +37,7 @@ It is also deployed on AWS - http://34.209.73.115:8090 and connected to a Postgr
 
 ### Create Product
 ```
-POST - http://localhost:8090/products
+POST - http://localhost:8090/products or http://34.209.73.115:8090/products
 ```
 ##### Body
 ```
@@ -54,7 +54,7 @@ Response: 201 CREATED
 ```
 ### Update Order
 ```
-PUT - http://localhost:8090/products/1
+PUT - http://localhost:8090/products/1 or http://34.209.73.115:8090/products/1
 ```
 ##### Body
 ```
@@ -72,7 +72,7 @@ Response: 200 OK
 ```
 ### Get all products
 ```
-GET - http://localhost:8090/products
+GET - http://localhost:8090/products or http://34.209.73.115:8090/products
 ```
 Response: 200 OK
 ```
@@ -91,7 +91,7 @@ Response: 200 OK
 ```
 ### Place an order
 ```
-POST - http://localhost:8090/orders
+POST - http://localhost:8090/orders or http://34.209.73.115:8090/orders
 ```
 ##### Body
 ```
@@ -109,7 +109,8 @@ Response: 201 CREATED
 ```
 ### Retrieving all orders within a given time period
 ```
-GET - http://localhost:8090/orders?start=2018-12-08 16:00:00&end=2018-12-08 17:00:00
+GET - http://localhost:8090/orders?start=2018-12-08 16:00:00&end=2018-12-08 17:00:00 or
+      http://34.209.73.115:8090/orders?start=2018-12-08 16:00:00&end=2018-12-08 17:00:00
 ```
 Response: 200 OK
 ```
@@ -136,7 +137,7 @@ Response: 200 OK
 ```
 ### (Re)calculate the total order amount after the price of a product was updated
 ```
-PUT - http://localhost:8090/orders/1/calculate
+PUT - http://localhost:8090/orders/1/calculate or http://34.209.73.115:8090/orders/1/calculate
 ```
 ##### Body
 ```
